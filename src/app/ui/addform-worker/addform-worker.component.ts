@@ -26,7 +26,8 @@ new EventEmitter<MyWorker>()
       name: this.name,
       surname: this.surname,
       type: this.type,
-      id: 0
+      id: 0,
+      phone: null
     };
     this.addWorker.emit(worker);
   }

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { MyWorker, MyWorkerType } from 'src/app/shared/worker.model';
 import { EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-tableworkers',
@@ -17,12 +19,20 @@ export class TableworkersComponent implements OnInit {
 
   name: string;
   surname: string;
+  phone: string;
+  workerForm: FormGroup;
+  flag = true;
+  mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/];
 
-  flag: boolean = true;
   myWType = MyWorkerType;
   constructor() { }
 
   ngOnInit(): void {
+    this.workerForm = new FormGroup({
+      name: new FormControl({ value: '', disabled: false }, [Validators.required]),
+      surname: new FormControl({ value: '', disabled: false }, [Validators.required]),
+      phone: new FormControl({ value: '', disabled: false }, [Validators.required])
+    });
   }
 
   onDeleteWorker(id: number) {
@@ -30,32 +40,14 @@ export class TableworkersComponent implements OnInit {
   }
 
   onChangeName() {
-    switch (this.flag) {
-      case true:
-        this.flag = false;
-        break;
-      case false:
-        this.flag = true;
-        break;
-    }
+    this.flag=false;
   }
 
   onConfirmName(id: number) {
-    console.log(this.name);
     this.workers[this.workers.findIndex((worker) => worker.id === id)].name = this.name;
     this.workers[this.workers.findIndex((worker) => worker.id === id)].surname = this.surname;
-    console.log(this.name);
+    this.workers[this.workers.findIndex((worker) => worker.id === id)].phone = `+7${this.phone}`;
     this.changeWorker.emit(this.surname);
-    if (((this.name != '')&& (this.name != undefined)) &&((this.surname != '')&& (this.surname != undefined)))  {
-      switch (this.flag) {
-        case true:
-          this.flag = false;
-          break;
-        case false:
-          this.flag = true;
-          break;
-      }
-    } 
-     
+    this.flag=true;
   }
 }
