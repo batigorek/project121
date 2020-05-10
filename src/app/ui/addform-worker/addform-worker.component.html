@@ -2,24 +2,30 @@
     <div class="col-12">
         <h5>Добавить сотрудника</h5>
     </div>
-    <div class="col-4">
-        <input type="text" class="form-control" placeholder="Имя"
-        [(ngModel)]="name">
-    </div>
-    <div class="col-4">
-        <input type="text" class="form-control" placeholder="Фамилия"
-        [(ngModel)]="surname">
-    </div>
-    <div class="col-4">
-        <select class="custom-select" [(ngModel)]="type">
-            <option [ngValue]="myWorkerType.programmer">Программист</option>
-            <option [ngValue]="myWorkerType.designer">Дизайнер</option>
-            <option [ngValue]="myWorkerType.copywriter">Рекламщик</option>
-            <option [ngValue]="myWorkerType.manager">Менеджер</option>
-        </select>
+    <div [formGroup]="addForm">
+        <div class="row mb-4">
+            <div class="col-5">
+                <input type="text" class="form-control" placeholder="Имя" formControlName="name">
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" placeholder="Фамилия" formControlName="surname">
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" placeholder="Телефон" 
+                                formControlName="phone" [textMask]="{mask: mask}"/>
+            </div>
+            <div class="col-4">
+                <select class="custom-select" formControlName="type">
+                    <option [ngValue]="myWorkerType.programmer">Программист</option>
+                    <option [ngValue]="myWorkerType.designer">Дизайнер</option>
+                    <option [ngValue]="myWorkerType.copywriter">Рекламщик</option>
+                    <option [ngValue]="myWorkerType.manager">Менеджер</option>
+                </select>
+            </div>
+        </div>
     </div>
     <div class="col-4 mt-2">
-        <button class="btn btn-outline-primary btn-sm"
-        (click)="onAddWorker()">Добавить</button>
+        <button class="btn btn-outline-primary btn-sm" (click)="onAddWorker(addForm.value)"
+            [disabled]="addForm.invalid">Добавить</button>
     </div>
 </div>

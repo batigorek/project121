@@ -15,15 +15,16 @@ export class TableworkersComponent implements OnInit {
   @Output() deleteWorker =
     new EventEmitter<number>();
   @Output() changeWorker =
-    new EventEmitter<string>();
+    new EventEmitter<MyWorker>();
 
   name: string;
   surname: string;
   phone: string;
   workerForm: FormGroup;
   flag = true;
-  mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/];
+  mask = ['8', '(', /[1-9]/, /\d/, /\d/, ')', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/];
 
+  selId: number;
   myWType = MyWorkerType;
   constructor() { }
 
@@ -39,15 +40,21 @@ export class TableworkersComponent implements OnInit {
     this.deleteWorker.emit(id);
   }
 
-  onChangeName() {
-    this.flag=false;
+  onChangeName(id: number) {
+    this.selId = id;
+    this.name = this.workers[this.workers.findIndex((worker) => worker.id === id)].name;
+    this.surname = this.workers[this.workers.findIndex((worker) => worker.id === id)].surname;
+    this.phone = this.workers[this.workers.findIndex((worker) => worker.id === id)].phone;
+    
+    this.workerForm.value.name = this.name;
+    this.workerForm.value.surname = this.surname;
+    this.workerForm.value.phone = `${this.phone}`;
   }
-
-  onConfirmName(id: number) {
-    this.workers[this.workers.findIndex((worker) => worker.id === id)].name = this.name;
-    this.workers[this.workers.findIndex((worker) => worker.id === id)].surname = this.surname;
-    this.workers[this.workers.findIndex((worker) => worker.id === id)].phone = `+7${this.phone}`;
-    this.changeWorker.emit(this.surname);
-    this.flag=true;
+  
+  onConfirmName(_worker, id) {
+    this.selId = undefined;
+    this.workerForm.reset();
+    this.changeWorker.emit({id: id, name: _worker.name, type: _worker.type, surname: _worker.surname, phone: _worker.phone })
+    console.log(_worker);
   }
 }

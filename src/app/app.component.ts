@@ -18,15 +18,27 @@ export class AppComponent {
 
   onDeleteWorker(id: number) {
     let index = this.workers.findIndex((worker) =>
-    worker.id === id)
+      worker.id === id)
     if (index !== -1) {
-      this.workers.splice(index,1);
+      this.workers.splice(index, 1);
+    }
+  }
+  
+  onChangeName(worker: MyWorker) {
+    console.log(worker);
+    for (let item of this.workers) {
+      if (item.id === worker.id) {
+        item.name = worker.name;
+        item.surname = worker.surname;
+        item.phone = worker.phone;
+      }
     }
   }
 
   onAddWorker(worker: MyWorker) {
-    let id = this.workers.length > 0 ? this.workers[this.workers.length - 1].id +1 : 0;
+    let id = this.workers.length > 0 ? this.workers[this.workers.length - 1].id + 1 : 0;
     worker.id = id;
     this.workers.push(worker);
+    console.log(worker);
   }
 }
