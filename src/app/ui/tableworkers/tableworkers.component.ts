@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { MyWorker, MyWorkerType } from 'src/app/shared/worker.model';
 import { EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { WorkService } from 'src/app/shared/services/work.service';
 
 
 @Component({
@@ -26,21 +27,24 @@ export class TableworkersComponent implements OnInit {
 
   selId: number;
   myWType = MyWorkerType;
-  constructor() { }
+  constructor(
+    private workService: WorkService
+  ) { }
 
   ngOnInit(): void {
     this.workerForm = new FormGroup({
       name: new FormControl({ value: '', disabled: false }, [Validators.required]),
       surname: new FormControl({ value: '', disabled: false }, [Validators.required]),
-      phone: new FormControl({ value: '', disabled: false }, [Validators.required])
+      phone: new FormControl({ value: '', disabled: false }, [Validators.required]),
+      type: new FormControl({ value: '', disabled: false }, [Validators.required]),
     });
   }
 
-  onDeleteWorker(id: number) {
+  async onDeleteWorker(id: number) {
     this.deleteWorker.emit(id);
   }
 
-  onChangeName(id: number) {
+  async onChangeName(id: number) {
     this.selId = id;
     this.name = this.workers[this.workers.findIndex((worker) => worker.id === id)].name;
     this.surname = this.workers[this.workers.findIndex((worker) => worker.id === id)].surname;
@@ -51,7 +55,7 @@ export class TableworkersComponent implements OnInit {
     this.workerForm.value.phone = `${this.phone}`;
   }
   
-  onConfirmName(_worker, id) {
+  async onConfirmName(_worker, id) {
     this.selId = undefined;
     this.workerForm.reset();
     this.changeWorker.emit({id: id, name: _worker.name, type: _worker.type, surname: _worker.surname, phone: _worker.phone })

@@ -2,6 +2,7 @@ import { Component, OnInit, Output } from '@angular/core';
 import { MyWorker, MyWorkerType} from 'src/app/shared/worker.model';
 import { EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { WorkService } from 'src/app/shared/services/work.service';
 
 @Component({
   selector: 'app-addform-worker',
@@ -21,7 +22,9 @@ mask = ['8', '(', /[1-9]/, /\d/, /\d/, ')', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-
 new EventEmitter<MyWorker>()
   addForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    private workService: WorkService
+  ) { }
 
   ngOnInit(): void {
     this.addForm = new FormGroup({
@@ -32,9 +35,14 @@ new EventEmitter<MyWorker>()
     });
   }
 
-  onAddWorker(worker) {
-     worker.phone = `${worker.phone}`;
-    this.addWorker.emit(worker);
-    this.addForm.reset();
+  async onAddWorker(worker) {
+    // try{
+    //   await this.workService.postWorkers(this.addForm.value)
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    //  worker.phone = `${worker.phone}`;
+    this.addWorker.emit(this.addForm.value);
+    // this.addForm.reset(); 
   }
 }

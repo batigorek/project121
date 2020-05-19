@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { TableworkersComponent } from './ui/tableworkers/tableworkers.component';
 import { AddformWorkerComponent } from './ui/addform-worker/addform-worker.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbPaginationModule,
     NgbAlertModule,
     NgbModule,
-    TextMaskModule
+    TextMaskModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

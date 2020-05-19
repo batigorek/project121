@@ -10,7 +10,6 @@
                 <th scope="col" [style.width]="'30%'">Фамилия</th>
                 <th scope="col" [style.width]="'30%'">Телефон</th>
                 <th scope="col" [style.width]="'5%'"></th>
-                <th scope="col" [style.width]="'10%'">Перевести</th>
                 <th scope="col" [style.width]="'10%'">Изменить</th>
             </tr>
         </thead>
@@ -38,16 +37,16 @@
                             formControlName="phone" [textMask]="{mask: mask}" />
                     </div>
                 </td>
-                <td>
-                    <button (click)="onDeleteWorker(worker.id)" class="btn btn-outline-danger btn-sm">Удалить</button>
-                </td>
-                <td>
-                    <select class="change" [(ngModel)]="worker.type">
+                <td *ngIf="selId == worker.id" [formGroup]="workerForm">
+                    <select class="change" formControlName="type">
                         <option [ngValue]="myWType.programmer">Программист</option>
                         <option [ngValue]="myWType.designer">Дизайнер</option>
                         <option [ngValue]="myWType.copywriter">Рекламщик</option>
                         <option [ngValue]="myWType.manager">Менеджер</option>
-                    </select>
+                        </select>
+                </td>
+                <td>
+                    <button (click)="onDeleteWorker(worker.id)" class="btn btn-outline-danger btn-sm">Удалить</button>
                 </td>
                 <td *ngIf="selId != worker.id">
                     <button class="btn btn-outline-primary btn-sm" (click)="onChangeName(worker.id)">Изменить</button>
