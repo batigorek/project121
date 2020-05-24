@@ -11,7 +11,8 @@ export class AppComponent implements OnInit {
   title = 'Список cотрудников';
   workers: MyWorker[];
   myWorkerType = MyWorkerType;
-
+searchStr = '';
+searchStr1 = '';
   constructor(
     private workService: WorkService
   ) {

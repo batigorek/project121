@@ -5,28 +5,20 @@
     </div>
   </div>
   <app-addform-worker (addWorker)="onAddWorker($event)"></app-addform-worker>
-  <app-tableworkers
-   [title]="'Программисты'"
-   [workers]="getByType(myWorkerType.programmer)"
-   (deleteWorker)="onDeleteWorker($event)"
-   (changeWorker)="onChangeName($event)"
-   ></app-tableworkers>
-   <app-tableworkers
-   [title]="'Дизайнеры'"
-   [workers]="getByType(myWorkerType.designer)"
-   (deleteWorker)="onDeleteWorker($event)"
-   (changeWorker)="onChangeName($event)"
-   ></app-tableworkers>
-   <app-tableworkers
-   [title]="'Рекламщики'"
-   [workers]="getByType(myWorkerType.copywriter)"
-   (deleteWorker)="onDeleteWorker($event)"
-   (changeWorker)="onChangeName($event)"
-   ></app-tableworkers>
-   <app-tableworkers
-   [title]="'Менеджеры'"
-   [workers]="getByType(myWorkerType.manager)"
-   (deleteWorker)="onDeleteWorker($event)"
-   (changeWorker)="onChangeName($event)"
-   ></app-tableworkers>
+  <div class="row mb-3">
+    <div class="col-12 mb-3">
+      <input type="text" class="form-control" [(ngModel)]='searchStr' placeholder="Поиск работника по имени">
+    </div>
+    <div class="col-12 mb-3">
+      <input type="text" class="form-control" [(ngModel)]='searchStr1' placeholder="Поиск работника по фамилии">
+    </div>
+  </div>
+  <app-tableworkers [title]="'Программисты'" [workers]="getByType(myWorkerType.programmer) | searchpipe: searchStr : searchStr1"
+    (deleteWorker)="onDeleteWorker($event)" (changeWorker)="onChangeName($event)"></app-tableworkers>
+  <app-tableworkers [title]="'Дизайнеры'" [workers]="getByType(myWorkerType.designer)  | searchpipe: searchStr : searchStr1"
+    (deleteWorker)="onDeleteWorker($event)" (changeWorker)="onChangeName($event)"></app-tableworkers>
+  <app-tableworkers [title]="'Рекламщики'" [workers]="getByType(myWorkerType.copywriter)  | searchpipe: searchStr : searchStr1"
+    (deleteWorker)="onDeleteWorker($event)" (changeWorker)="onChangeName($event)"></app-tableworkers>
+  <app-tableworkers [title]="'Менеджеры'" [workers]="getByType(myWorkerType.manager)  | searchpipe: searchStr : searchStr1"
+    (deleteWorker)="onDeleteWorker($event)" (changeWorker)="onChangeName($event)"></app-tableworkers>
 </div>

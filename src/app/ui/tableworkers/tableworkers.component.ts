@@ -24,6 +24,7 @@ export class TableworkersComponent implements OnInit {
   workerForm: FormGroup;
   flag = true;
   mask = ['8', '(', /[1-9]/, /\d/, /\d/, ')', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/];
+  searchStr = '';
 
   selId: number;
   myWType = MyWorkerType;
